@@ -37,7 +37,7 @@ def create_embeddings(pdf):
     embeddings = HuggingFaceEmbeddings(model_name="sentence-transformers/paraphrase-multilingual-MiniLM-L12-v2")
     knowledge_base = FAISS.from_texts(chunks, embeddings)
 
-return knowledge_base
+    return knowledge_base
 
 if pdf_obj:
     knowledge_base = create_embeddings(pdf_obj)
