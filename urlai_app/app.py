@@ -36,7 +36,8 @@ def create_embeddings(pdf):
 
     embeddings = HuggingFaceEmbeddings(model_name="sentence-transformers/paraphrase-multilingual-MiniLM-L12-v2")
     knowledge_base = FAISS.from_texts(chunks, embeddings)
-
+    
+    
     return knowledge_base
 
 if pdf_obj:
@@ -48,7 +49,7 @@ if pdf_obj:
         os.environ["GOOGLE_API_KEY"] = GOOGLE_API_KEY
         docs = knowledge_base.similarity_search(user_question, 3)
         #llm = ChatOpenAI(model_name='gpt-4o') #gpt-4o
-        llm = ChatGoogleGenerativeAI(model="gemini-pro",temperature=0.3)
+        llm = ChatGoogleGenerativeAI(model="gemini-1.5-flash",temperature=0.3)
         chain = load_qa_chain(llm, chain_type="stuff")
         respuesta = chain.run(input_documents=docs, question=user_question)
 
