@@ -21,7 +21,7 @@ st.set_page_config('preguntaDOC')
 st.header("Pregunta a tu PDF")
 #OPENAI_API_KEY = st.text_input('OpenAI API Key', type='password')
 GOOGLE_API_KEY = st.text_input('GOOGLE_API_KEY', type='password')
-genai.configure(api_key=GOOGLE_API_KEY)
+
 
 pdf_obj = st.file_uploader("Carga tu documento", type="pdf", on_change=st.cache_resource.clear)
 
@@ -54,6 +54,7 @@ if pdf_obj:
     if user_question:
         #os.environ["OPENAI_API_KEY"] = OPENAI_API_KEY
         os.environ["GOOGLE_API_KEY"] = GOOGLE_API_KEY
+        genai.configure(api_key=os.environ["GOOGLE_API_KEY"])
        
 
         docs = knowledge_base.similarity_search(user_question, 3)
