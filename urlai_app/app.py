@@ -54,7 +54,7 @@ if pdf_obj:
     if user_question:
         #os.environ["OPENAI_API_KEY"] = OPENAI_API_KEY
         os.environ["GOOGLE_API_KEY"] = GOOGLE_API_KEY
-        genai.configure(api_key=os.environ["GOOGLE_API_KEY"])
+        genai.configure(api_key='AIzaSyBaz3U41ZkmkcsHYr87FmkUgu-8Er6_2mc')
        
 
         docs = knowledge_base.similarity_search(user_question, 3)
