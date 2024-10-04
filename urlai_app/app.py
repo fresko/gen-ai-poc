@@ -53,7 +53,7 @@ if pdf_obj:
 
     if user_question:
         #os.environ["OPENAI_API_KEY"] = OPENAI_API_KEY
-        #os.environ["GOOGLE_API_KEY"] = GOOGLE_API_KEY
+        os.environ["GOOGLE_API_KEY"] = GOOGLE_API_KEY
        
 
         docs = knowledge_base.similarity_search(user_question, 3)
