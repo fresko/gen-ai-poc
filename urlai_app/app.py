@@ -51,8 +51,8 @@ if pdf_obj:
 
     if user_question:
         #os.environ["OPENAI_API_KEY"] = OPENAI_API_KEY
-        os.environ["GOOGLE_API_KEY"] = GOOGLE_API_KEY
-        genai.configure(api_key=os.getenv("GOOGLE_API_KEY"))
+        #os.environ["GOOGLE_API_KEY"] = GOOGLE_API_KEY
+        genai.configure(api_key=GOOGLE_API_KEY)
 
         docs = knowledge_base.similarity_search(user_question, 3)
         #llm = ChatOpenAI(model_name='gpt-4o') #gpt-4o
