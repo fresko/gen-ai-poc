@@ -43,10 +43,7 @@ def create_embeddings(pdf):
     
     
     return knowledge_base
-class Pet(BaseModel):
-    model_config = ConfigDict(extra='forbid')
 
-    name: str
 
 if pdf_obj:
     knowledge_base = create_embeddings(pdf_obj)
