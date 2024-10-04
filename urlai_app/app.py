@@ -13,7 +13,7 @@ from langchain_community.vectorstores import FAISS
 from langchain.chains.question_answering import load_qa_chain
 from langchain_google_genai import ChatGoogleGenerativeAI
 from langchain_google_genai import GoogleGenerativeAIEmbeddings
-from pydantic import BaseModel
+from pydantic import BaseModel, ConfigDict
 
 
 st.set_page_config('preguntaDOC')
@@ -42,6 +42,10 @@ def create_embeddings(pdf):
     
     
     return knowledge_base
+class Pet(BaseModel):
+    model_config = ConfigDict(extra='forbid')
+
+    name: str
 
 if pdf_obj:
     knowledge_base = create_embeddings(pdf_obj)
