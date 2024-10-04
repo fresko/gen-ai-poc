@@ -12,6 +12,7 @@ from langchain_community.vectorstores import FAISS
 from langchain_community.chat_models import ChatOpenAI
 from langchain.chains.question_answering import load_qa_chain
 from langchain_google_genai import ChatGoogleGenerativeAI
+from langchain_google_genai import GoogleGenerativeAIEmbeddings
 
 
 st.set_page_config('preguntaDOC')
@@ -34,7 +35,8 @@ def create_embeddings(pdf):
         )        
     chunks = text_splitter.split_text(text)
 
-    embeddings = HuggingFaceEmbeddings(model_name="sentence-transformers/paraphrase-multilingual-MiniLM-L12-v2")
+    #embeddings = HuggingFaceEmbeddings(model_name="sentence-transformers/paraphrase-multilingual-MiniLM-L12-v2")
+    embeddings = GoogleGenerativeAIEmbeddings(model = "models/embedding-001")
     knowledge_base = FAISS.from_texts(chunks, embeddings)
     
     
