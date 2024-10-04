@@ -14,13 +14,15 @@ from langchain.chains.question_answering import load_qa_chain
 from langchain_google_genai import ChatGoogleGenerativeAI
 from langchain_google_genai import GoogleGenerativeAIEmbeddings
 import google.generativeai as genai
-
+from dotenv import load_dotenv
 
 
 st.set_page_config('preguntaDOC')
 st.header("Pregunta a tu PDF")
 #OPENAI_API_KEY = st.text_input('OpenAI API Key', type='password')
 GOOGLE_API_KEY = st.text_input('GOOGLE_API_KEY', type='password')
+genai.configure(api_key=GOOGLE_API_KEY)
+
 pdf_obj = st.file_uploader("Carga tu documento", type="pdf", on_change=st.cache_resource.clear)
 
 @st.cache_resource 
@@ -52,7 +54,7 @@ if pdf_obj:
     if user_question:
         #os.environ["OPENAI_API_KEY"] = OPENAI_API_KEY
         #os.environ["GOOGLE_API_KEY"] = GOOGLE_API_KEY
-        genai.configure(api_key=GOOGLE_API_KEY)
+       
 
         docs = knowledge_base.similarity_search(user_question, 3)
         #llm = ChatOpenAI(model_name='gpt-4o') #gpt-4o
