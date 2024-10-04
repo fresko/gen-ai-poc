@@ -17,6 +17,8 @@ import google.generativeai as genai
 from dotenv import load_dotenv
 
 
+load_dotenv()
+
 st.set_page_config('preguntaDOC')
 st.header("Pregunta a tu PDF")
 #OPENAI_API_KEY = st.text_input('OpenAI API Key', type='password')
@@ -54,7 +56,7 @@ if pdf_obj:
     if user_question:
         #os.environ["OPENAI_API_KEY"] = OPENAI_API_KEY
         os.environ["GOOGLE_API_KEY"] = GOOGLE_API_KEY
-        genai.configure(api_key='AIzaSyBaz3U41ZkmkcsHYr87FmkUgu-8Er6_2mc')
+        genai.configure(api_key=os.environ["GOOGLE_API_KEY"])
        
 
         docs = knowledge_base.similarity_search(user_question, 3)
