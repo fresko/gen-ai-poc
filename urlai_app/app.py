@@ -9,10 +9,11 @@ from langchain.text_splitter import RecursiveCharacterTextSplitter
 #from langchain.vectorstores import FAISS
 from langchain_community.vectorstores import FAISS
 #from langchain.chat_models import ChatOpenAI
-from langchain_community.chat_models import ChatOpenAI
+#from langchain_community.chat_models import ChatOpenAI
 from langchain.chains.question_answering import load_qa_chain
 from langchain_google_genai import ChatGoogleGenerativeAI
 from langchain_google_genai import GoogleGenerativeAIEmbeddings
+from pydantic import BaseModel
 
 
 st.set_page_config('preguntaDOC')
