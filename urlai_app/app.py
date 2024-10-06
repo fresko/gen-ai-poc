@@ -27,6 +27,10 @@ st.header("Pregunta a tu PDF")
 GOOGLE_API_KEY = st.text_input('GOOGLE_API_KEY', type='password')
 os.environ["GOOGLE_API_KEY"] = GOOGLE_API_KEY
 genai.configure(api_key=os.environ.get("GOOGLE_API_KEY"))
+
+with st.expander("Open to see more"):
+    st.text_input("Input 1")
+    st.text_input("Input 2")
        
 
 pdf_obj = st.file_uploader("Carga tu documento", type="pdf", on_change=st.cache_resource.clear)
@@ -37,6 +41,7 @@ def create_embeddings(pdf):
     text = ""
     for page in pdf_reader.pages:
         text += page.extract_text()
+        
 
     text_splitter = RecursiveCharacterTextSplitter(
         chunk_size=800,
