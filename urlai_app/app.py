@@ -15,6 +15,7 @@ from langchain_google_genai import ChatGoogleGenerativeAI
 from langchain_google_genai import GoogleGenerativeAIEmbeddings
 import google.generativeai as genai
 from dotenv import load_dotenv
+import time
 
 
 
@@ -22,7 +23,15 @@ from dotenv import load_dotenv
 load_dotenv()
 
 st.set_page_config('preguntaDOC')
-c = st.container()
+
+with st.sidebar:
+    with st.echo():
+        st.write("This code will be printed to the sidebar.")
+
+    with st.spinner("Loading..."):
+        time.sleep(5)
+    st.success("Done!")
+
 c.write("This will show second")
 #OPENAI_API_KEY = st.text_input('OpenAI API Key', type='password')
 st.header("Pregunta a tu PDF")
