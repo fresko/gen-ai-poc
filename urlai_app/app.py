@@ -22,15 +22,17 @@ from dotenv import load_dotenv
 load_dotenv()
 
 st.set_page_config('preguntaDOC')
-st.header("Pregunta a tu PDF")
-#OPENAI_API_KEY = st.text_input('OpenAI API Key', type='password')
-GOOGLE_API_KEY = st.text_input('GOOGLE_API_KEY', type='password')
-os.environ["GOOGLE_API_KEY"] = GOOGLE_API_KEY
-genai.configure(api_key=os.environ.get("GOOGLE_API_KEY"))
 
 with st.expander("Open to see more"):
     st.text_input("Input 1")
     st.text_input("Input 2")
+#OPENAI_API_KEY = st.text_input('OpenAI API Key', type='password')
+st.header("Pregunta a tu PDF")
+GOOGLE_API_KEY = st.text_input('GOOGLE_API_KEY', type='password')
+os.environ["GOOGLE_API_KEY"] = GOOGLE_API_KEY
+genai.configure(api_key=os.environ.get("GOOGLE_API_KEY"))
+
+
        
 
 pdf_obj = st.file_uploader("Carga tu documento", type="pdf", on_change=st.cache_resource.clear)
