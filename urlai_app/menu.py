@@ -135,7 +135,7 @@ if selected == "AI-Agent":
 
             if user_question2:               
                 docs = knowledge_base2.similarity_search(user_question2, 3)
-                llm = ChatOpenAI(model_name='gpt-4o') #gpt-4o
+                llm = ChatOpenAI(model_name='gpt-4o-mini') #gpt-4o
                 chain = load_qa_chain(llm, chain_type="stuff")
                 respuesta2 = chain.run(input_documents=docs, question=user_question)
 
