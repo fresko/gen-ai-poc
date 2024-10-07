@@ -26,7 +26,7 @@ def streamlit_menu(example=1):
     if example == 1:
         # 1. as sidebar menu
         with st.sidebar:
-            selected = option_menu(
+             selected = option_menu(
                 menu_title="Main Menu",  # required
                 options=["Start", "AI-Agent", "Contact"],  # required
                 icons=["rocket", "robot", "envelope"],  # optional
@@ -111,7 +111,7 @@ if selected == "AI-Agent":
         genai.configure(api_key=os.environ.get("GOOGLE_API_KEY"))
         #pdf_obj = st.file_uploader("Carga tu documento", type="pdf", on_change=st.cache_resource.clear)
 
-        if pdf_obj!=None:
+        if GOOGLE_API_KEY:
             knowledge_base = create_embeddings(pdf_obj)
             user_question = st.text_input("Haz una pregunta sobre tu PDF:")
 
@@ -129,8 +129,9 @@ if selected == "AI-Agent":
         OPENAI_API_KEY = st.text_input('OpenAI API Key', type='password')
         os.environ["OPENAI_API_KEY"] = OPENAI_API_KEY
         #pdf_obj2 = st.file_uploader("Carga tu documento", type="pdf", on_change=st.cache_resource.clear)
+        
 
-        if pdf_obj!=None:
+        if OPENAI_API_KEY:
             knowledge_base2 = create_embeddings(pdf_obj)
             user_question2 = st.text_input("Haz una pregunta sobre tu PDF:")
 
