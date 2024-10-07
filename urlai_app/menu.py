@@ -20,7 +20,8 @@ from dotenv import load_dotenv
 st.set_page_config('AI AGENT ')
 # 1=sidebar menu, 2=horizontal menu, 3=horizontal menu w/ custom menu
 EXAMPLE_NO = 1
-pdf_obj = ""
+pdf_obj = None
+
 #Funciones_________________________________
 def streamlit_menu(example=1):
     if example == 1:
