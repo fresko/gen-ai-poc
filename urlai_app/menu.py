@@ -26,6 +26,7 @@ def streamlit_menu(example=1):
     if example == 1:
         # 1. as sidebar menu
         with st.sidebar:
+            pdf_obj = st.file_uploader("Carga tu documento", type="pdf", on_change=st.cache_resource.clear)
             selected = option_menu(
                 menu_title="Main Menu",  # required
                 options=["Start", "AI-Agent", "Contact"],  # required
@@ -44,8 +45,7 @@ def streamlit_menu(example=1):
             menu_icon="cast",  # optional
             default_index=0,  # optional
             orientation="horizontal",
-        )
-         pdf_obj = st.file_uploader("Carga tu documento", type="pdf", on_change=st.cache_resource.clear)
+        )        
         return selected
 
     if example == 3:
