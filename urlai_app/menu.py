@@ -56,6 +56,8 @@ def streamlit_menu(example=1):
 
 selected = streamlit_menu(example=EXAMPLE_NO)
 
+#tab1, tab2, tab3 = st.tabs(["Google - Gemini", "OpenAI - ChatGPT", "Conversacional Data Business "])
+
 if selected == "Home":
     st.title(f"You have selected {selected}")
 if selected == "Projects":
