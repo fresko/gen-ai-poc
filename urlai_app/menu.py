@@ -138,12 +138,12 @@ if selected == "AI-Agent":
         pdf_obj2 = st.file_uploader("Carga tu documento", type="pdf", on_change=st.cache_resource.clear)
 
          if pdf_obj2:
-            knowledge_base = create_embeddings(pdf_obj2)
-            user_question = st.text_input("Haz una pregunta sobre tu PDF:")
+            knowledge_base2 = create_embeddings(pdf_obj2)
+            user_question2 = st.text_input("Haz una pregunta sobre tu PDF:")
 
             if user_question:
                 os.environ["OPENAI_API_KEY"] = OPENAI_API_KEY
-                docs = knowledge_base.similarity_search(user_question, 3)
+                docs = knowledge_base2.similarity_search(user_question2, 3)
                 llm = ChatOpenAI(model_name='gpt-4o') #gpt-4o
                 chain = load_qa_chain(llm, chain_type="stuff")
                 respuesta = chain.run(input_documents=docs, question=user_question)
