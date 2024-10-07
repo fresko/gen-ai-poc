@@ -128,7 +128,7 @@ if selected == "AI-Agent":
         st.image("https://www.androidheadlines.com/wp-content/uploads/2023/03/GPT-4-logo-1420x799.webp",  width=100)
         OPENAI_API_KEY = st.text_input('OpenAI API Key', type='password')
         os.environ["OPENAI_API_KEY"] = OPENAI_API_KEY
-        pdf_obj2 = st.file_uploader("Carga tu documento", type="pdf", key="pdf2" on_change=st.cache_resource.clear)
+        pdf_obj2 = st.file_uploader("Carga tu documento", type="pdf", key="pdf2", on_change=st.cache_resource.clear)
         if pdf_obj2:
             knowledge_base2 = create_embeddings(pdf_obj2)
             user_question2 = st.text_input("Haz una pregunta sobre tu PDF:")
