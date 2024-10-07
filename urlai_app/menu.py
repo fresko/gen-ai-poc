@@ -20,7 +20,7 @@ from dotenv import load_dotenv
 st.set_page_config('AI AGENT ')
 # 1=sidebar menu, 2=horizontal menu, 3=horizontal menu w/ custom menu
 EXAMPLE_NO = 1
-
+pdf_obj = None
 #Funciones_________________________________
 def streamlit_menu(example=1):
     if example == 1:
@@ -113,7 +113,7 @@ if selected == "AI-Agent":
         #pdf_obj = st.file_uploader("Carga tu documento", type="pdf", on_change=st.cache_resource.clear)
 
         if GOOGLE_API_KEY:
-            knowledge_base = create_embeddings(st.sidebar.pdf_obj)
+            knowledge_base = create_embeddings(pdf_obj)
             user_question = st.text_input("Haz una pregunta sobre tu PDF:")
 
             if user_question:
@@ -131,7 +131,7 @@ if selected == "AI-Agent":
         os.environ["OPENAI_API_KEY"] = OPENAI_API_KEY
         #pdf_obj2 = st.file_uploader("Carga tu documento", type="pdf", on_change=st.cache_resource.clear)
         if OPENAI_API_KEY:
-            knowledge_base2 = create_embeddings(st.sidebar.pdf_obj))
+            knowledge_base2 = create_embeddings(pdf_obj))
             user_question2 = st.text_input("Haz una pregunta sobre tu PDF:")
 
             if user_question2:               
