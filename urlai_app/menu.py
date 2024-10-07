@@ -104,7 +104,6 @@ if selected == "AI-Agent":
     with tab1: #GEMINI
         st.header("Google - Gemini")
         st.image("https://1000marcas.net/wp-content/uploads/2024/02/Gemini-Logo.jpg", width=100)
-
         load_dotenv()
         #OPENAI_API_KEY = st.text_input('OpenAI API Key', type='password')
         st.header("AGENTE AI - PREGUNTA A TU PDF")
