@@ -134,6 +134,22 @@ if selected == "AI-Agent":
     with tab2:
         st.header("OpenAI - ChatGPT")
         st.image("https://www.androidheadlines.com/wp-content/uploads/2023/03/GPT-4-logo-1420x799.webp",  width=100)
+        OPENAI_API_KEY = st.text_input('OpenAI API Key', type='password')
+        pdf_obj2 = st.file_uploader("Carga tu documento", type="pdf", on_change=st.cache_resource.clear)
+
+         if pdf_obj2:
+            knowledge_base = create_embeddings(pdf_obj2)
+            user_question = st.text_input("Haz una pregunta sobre tu PDF:")
+
+            if user_question:
+                os.environ["OPENAI_API_KEY"] = OPENAI_API_KEY
+                docs = knowledge_base.similarity_search(user_question, 3)
+                llm = ChatOpenAI(model_name='gpt-4o') #gpt-4o
+                chain = load_qa_chain(llm, chain_type="stuff")
+                respuesta = chain.run(input_documents=docs, question=user_question)
+
+                st.write(respuesta)    
+
     with tab3:
         st.header("Conversational Data Business ")
         st.image("https://www.researchgate.net/profile/Marianna-Charitonidou/publication/360719662/figure/fig1/AS:1157512099299329@1652983798438/DATA-TUNNEL-2020-21-Custom-software-site-specific-installation-Duration-9-minutes.jpg", width=100)
