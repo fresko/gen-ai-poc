@@ -117,13 +117,7 @@ if selected == "AI-Agent":
             user_question = st.text_input("Haz una pregunta sobre tu PDF:")
 
             if user_question:
-                #os.environ["OPENAI_API_KEY"] = OPENAI_API_KEY
-                #os.environ["GOOGLE_API_KEY"] = GOOGLE_API_KEY
-                #genai.configure(api_key=os.environ["GOOGLE_API_KEY"])
-            
-
                 docs = knowledge_base.similarity_search(user_question, 3)
-                #llm = ChatOpenAI(model_name='gpt-4o') #gpt-4o
                 llm = ChatGoogleGenerativeAI(model="gemini-1.5-flash",temperature=0.3)
                 chain = load_qa_chain(llm, chain_type="stuff")
                 respuesta = chain.run(input_documents=docs, question=user_question)
@@ -142,7 +136,6 @@ if selected == "AI-Agent":
             user_question2 = st.text_input("Haz una pregunta sobre tu PDF:")
 
             if user_question2:
-               
                 docs = knowledge_base2.similarity_search(user_question2, 3)
                 llm = ChatOpenAI(model_name='gpt-4o') #gpt-4o
                 chain = load_qa_chain(llm, chain_type="stuff")
