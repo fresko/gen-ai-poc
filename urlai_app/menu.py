@@ -131,7 +131,7 @@ if selected == "AI-Agent":
         #pdf_obj2 = st.file_uploader("Carga tu documento", type="pdf", key="pdf2", on_change=st.cache_resource.clear)
         if OPENAI_API_KEY:
             knowledge_base2 = create_embeddings(pdf_obj)
-            user_question2 = st.text_input("Haz una pregunta sobre tu PDF:")
+            user_question2 = st.text_input("Haz una pregunta sobre tu PDF:", key="pdf2")
 
             if user_question2:               
                 docs = knowledge_base2.similarity_search(user_question2, 3)
