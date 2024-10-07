@@ -17,6 +17,7 @@ import google.generativeai as genai
 from streamlit_option_menu import option_menu
 from dotenv import load_dotenv
 
+st.set_page_config('AI AGENT ')
 # 1=sidebar menu, 2=horizontal menu, 3=horizontal menu w/ custom menu
 EXAMPLE_NO = 1
 
@@ -105,7 +106,6 @@ if selected == "AI-Agent":
         st.image("https://1000marcas.net/wp-content/uploads/2024/02/Gemini-Logo.jpg", width=100)
 
         load_dotenv()
-        st.set_page_config('preguntaDOC')
         #OPENAI_API_KEY = st.text_input('OpenAI API Key', type='password')
         st.header("AGENTE AI - PREGUNTA A TU PDF")
         GOOGLE_API_KEY = st.text_input('GOOGLE_API_KEY', type='password')
