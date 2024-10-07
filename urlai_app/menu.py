@@ -20,14 +20,12 @@ from dotenv import load_dotenv
 st.set_page_config('AI AGENT ')
 # 1=sidebar menu, 2=horizontal menu, 3=horizontal menu w/ custom menu
 EXAMPLE_NO = 1
-pdf_obj = None
 #Funciones_________________________________
 def streamlit_menu(example=1):
     if example == 1:
         # 1. as sidebar menu
         with st.sidebar:
-            pdf_obj = st.file_uploader("Carga tu documento", type="pdf", on_change=st.cache_resource.clear)
-            selected = option_menu(
+                      selected = option_menu(
                 menu_title="Main Menu",  # required
                 options=["Start", "AI-Agent", "Contact"],  # required
                 icons=["rocket", "robot", "envelope"],  # optional
