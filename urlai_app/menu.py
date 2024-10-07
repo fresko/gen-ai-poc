@@ -131,7 +131,7 @@ if selected == "AI-Agent":
         os.environ["OPENAI_API_KEY"] = OPENAI_API_KEY
         #pdf_obj2 = st.file_uploader("Carga tu documento", type="pdf", on_change=st.cache_resource.clear)
         if OPENAI_API_KEY:
-            knowledge_base2 = create_embeddings(pdf_obj))
+            knowledge_base2 = create_embeddings(pdf_obj)
             user_question2 = st.text_input("Haz una pregunta sobre tu PDF:")
 
             if user_question2:               
