@@ -32,7 +32,7 @@ with st.sidebar:
     st.header("OPENAI- ChatGPT")
     st.image("https://www.androidheadlines.com/wp-content/uploads/2023/03/GPT-4-logo-1420x799.webp",  width=100)
 
-c.write("This will show second")
+
 #OPENAI_API_KEY = st.text_input('OpenAI API Key', type='password')
 st.header("AGENTE AI - PREGUNTA A TU PDF")
 GOOGLE_API_KEY = st.text_input('GOOGLE_API_KEY', type='password')
