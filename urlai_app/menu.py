@@ -27,7 +27,7 @@ def streamlit_menu(example=1):
         # 1. as sidebar menu
         with st.sidebar:
             pdf_obj = st.file_uploader("Carga tu documento", type="pdf", on_change=st.cache_resource.clear)
-             selected = option_menu(
+            selected = option_menu(
                 menu_title="Main Menu",  # required
                 options=["Start", "AI-Agent", "Contact"],  # required
                 icons=["rocket", "robot", "envelope"],  # optional
