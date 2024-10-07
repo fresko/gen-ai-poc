@@ -18,6 +18,7 @@ from streamlit_option_menu import option_menu
 from dotenv import load_dotenv
 
 st.set_page_config('AI AGENT ')
+accept_multiple_files=True
 # 1=sidebar menu, 2=horizontal menu, 3=horizontal menu w/ custom menu
 EXAMPLE_NO = 1
 #Funciones_________________________________
@@ -108,7 +109,7 @@ if selected == "AI-Agent":
         GOOGLE_API_KEY = st.text_input('GOOGLE_API_KEY', type='password')
         os.environ["GOOGLE_API_KEY"] = GOOGLE_API_KEY
         genai.configure(api_key=os.environ.get("GOOGLE_API_KEY"))
-        pdf_obj = st.file_uploader("Carga tu documento", type="pdf", on_change=st.cache_resource.clear)
+        pdf_obj = st.file_uploader("Carga tu documento", type="pdf", key="pdf1",on_change=st.cache_resource.clear)
 
         if pdf_obj:
             knowledge_base = create_embeddings(pdf_obj)
@@ -127,7 +128,7 @@ if selected == "AI-Agent":
         st.image("https://www.androidheadlines.com/wp-content/uploads/2023/03/GPT-4-logo-1420x799.webp",  width=100)
         OPENAI_API_KEY = st.text_input('OpenAI API Key', type='password')
         os.environ["OPENAI_API_KEY"] = OPENAI_API_KEY
-        pdf_obj2 = st.file_uploader("Carga tu documento", type="pdf", on_change=st.cache_resource.clear)
+        pdf_obj2 = st.file_uploader("Carga tu documento", type="pdf", key="pdf2" on_change=st.cache_resource.clear)
         if pdf_obj2:
             knowledge_base2 = create_embeddings(pdf_obj2)
             user_question2 = st.text_input("Haz una pregunta sobre tu PDF:")
