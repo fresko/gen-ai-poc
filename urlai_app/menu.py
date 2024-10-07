@@ -105,7 +105,6 @@ if selected == "AI-Agent":
         st.header("Google - Gemini")
         st.image("https://1000marcas.net/wp-content/uploads/2024/02/Gemini-Logo.jpg", width=100)
         load_dotenv()
-        #OPENAI_API_KEY = st.text_input('OpenAI API Key', type='password')
         st.header("AGENTE AI - PREGUNTA A TU PDF")
         GOOGLE_API_KEY = st.text_input('GOOGLE_API_KEY', type='password')
         os.environ["GOOGLE_API_KEY"] = GOOGLE_API_KEY
@@ -131,11 +130,11 @@ if selected == "AI-Agent":
         os.environ["OPENAI_API_KEY"] = OPENAI_API_KEY
         pdf_obj2 = st.file_uploader("Carga tu documento", type="pdf", on_change=st.cache_resource.clear)
 
-         if pdf_obj2:
+        if pdf_obj2:
             knowledge_base2 = create_embeddings(pdf_obj2)
             user_question2 = st.text_input("Haz una pregunta sobre tu PDF:")
 
-            if user_question2:
+            if user_question2:               
                 docs = knowledge_base2.similarity_search(user_question2, 3)
                 llm = ChatOpenAI(model_name='gpt-4o') #gpt-4o
                 chain = load_qa_chain(llm, chain_type="stuff")
