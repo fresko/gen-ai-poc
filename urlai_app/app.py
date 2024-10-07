@@ -25,16 +25,16 @@ load_dotenv()
 st.set_page_config('preguntaDOC')
 
 with st.sidebar:
-    with st.echo():
-        st.write("This code will be printed to the sidebar.")
-
-    with st.spinner("Loading..."):
-        time.sleep(5)
-    st.success("Done!")
+    with st.sidebar:
+    st.header("GEMINI GOOGLE")
+    st.image("https://1000marcas.net/wp-content/uploads/2024/02/Gemini-Logo.jpg", width=100)
+    with st.sidebar:
+    st.header("OPENAI- ChatGPT")
+    st.image("https://www.androidheadlines.com/wp-content/uploads/2023/03/GPT-4-logo-1420x799.webp",  width=100)
 
 c.write("This will show second")
 #OPENAI_API_KEY = st.text_input('OpenAI API Key', type='password')
-st.header("Pregunta a tu PDF")
+st.header("AGENTE AI - PREGUNTA A TU PDF")
 GOOGLE_API_KEY = st.text_input('GOOGLE_API_KEY', type='password')
 os.environ["GOOGLE_API_KEY"] = GOOGLE_API_KEY
 genai.configure(api_key=os.environ.get("GOOGLE_API_KEY"))
