@@ -20,16 +20,15 @@ import extra_streamlit_components as stx
 
 #FrontEnd
 st.title("Hello Space People - let's talk whit your DATA !")
-st.header("AGENTE AI - PREGUNTA A TU BASE DE DATOS")
+st.header("AGENTE AI - PREGUNTA A TU BASE DE DATOS")  
+GOOGLE_API_KEY = st.text_input('GOOGLE_API_KEY', type='password')        
+PINECONE_API_KEY = st.text_input('PINECONE_API_KEY', type='password')
 
-        GOOGLE_API_KEY = st.text_input('GOOGLE_API_KEY', type='password')        
-        PINECONE_API_KEY = st.text_input('PINECONE_API_KEY', type='password')
-
-        os.environ["GOOGLE_API_KEY"] = GOOGLE_API_KEY
-        os.environ["PINECONE_API_KEY"] = PINECONE_API_KEY
-        api_key = os.environ["PINECONE_API_KEY"]
-        pc = Pinecone(api_key=api_key)
-        pinecone_index = pc.Index("quickstart")
+os.environ["GOOGLE_API_KEY"] = GOOGLE_API_KEY
+os.environ["PINECONE_API_KEY"] = PINECONE_API_KEY
+api_key = os.environ["PINECONE_API_KEY"]
+pc = Pinecone(api_key=api_key)
+pinecone_index = pc.Index("quickstart")
 
 if pc 
 
