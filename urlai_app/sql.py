@@ -154,23 +154,26 @@ if api_key:
         sql_tool, vector_tool, llm=OpenAI(model="gpt-3.5-turbo") #gpt-4
     )
 
+     
+    user_question = st.text_input("Haz una pregunta a tu BD :")
 
-    response = query_engine.query(
-        "Tell me about the arts and culture of the city with the highest"
-        " population"
-    )
-    print(str(response))
-    st.write(response) 
+    if user_question:
 
-    response = query_engine.query("Tell me about the history of Berlin")
-    print(str(response))
-    st.write(response)
+        response = query_engine.query(user_question)
+        st.write(response) 
 
-    response = query_engine.query(
-        "Can you give me the country corresponding to each city?"
-    )
-    print(str(response))
-    st.write(response)
+       #"Tell me about the arts and culture of the city with the highest"
+            #" population" 
+
+       # response = query_engine.query("Tell me about the history of Berlin")
+       # print(str(response))
+       # st.write(response)
+
+        #response = query_engine.query(
+        #    "Can you give me the country corresponding to each city?"
+        #)
+        #print(str(response))
+        #st.write(response)
 
 
 ######
