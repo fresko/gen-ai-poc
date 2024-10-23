@@ -30,7 +30,7 @@ api_key = os.environ["PINECONE_API_KEY"]
 pc = Pinecone(api_key=api_key)
 pinecone_index = pc.Index("quickstart")
 
-if pc 
+if pc: 
 
     val = stx.stepper_bar(steps=["Ready", "Get Set", "Go"])
     st.info("Phase #{val}")
