@@ -16,7 +16,7 @@ from llama_index.core.vector_stores import MetadataInfo, VectorStoreInfo
 from llama_index.core.query_engine import RetrieverQueryEngine
 from llama_index.core.tools import QueryEngineTool
 from llama_index.core.query_engine import SQLAutoVectorQueryEngine
-import extra_streamlit_components as stx
+#import extra_streamlit_components as stx
 
 #FrontEnd
 st.title("Hello Space People - let's talk whit your DATA !")
@@ -32,8 +32,9 @@ pinecone_index = pc.Index("quickstart")
 
 if pc: 
 
-    val = stx.stepper_bar(steps=["Ready", "Get Set", "Go"])
-    st.info("Phase #{val}")
+    #val = stx.stepper_bar(steps=["Ready", "Get Set", "Go"])
+    #st.info("Phase #{val}")
+    st.title("Start ...!")
 
    
 
