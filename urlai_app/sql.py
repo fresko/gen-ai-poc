@@ -19,7 +19,7 @@ from llama_index.core.query_engine import SQLAutoVectorQueryEngine
 import extra_streamlit_components as stx
 
 #FrontEnd
-st.title(f"Hello Space People - let's talk whit your DATA !)
+st.title("Hello Space People - let's talk whit your DATA !)
 st.header("AGENTE AI - PREGUNTA A TU BASE DE DATOS")
 
         GOOGLE_API_KEY = st.text_input('GOOGLE_API_KEY', type='password')
@@ -32,7 +32,7 @@ st.header("AGENTE AI - PREGUNTA A TU BASE DE DATOS")
 if pc 
 
     val = stx.stepper_bar(steps=["Ready", "Get Set", "Go"])
-    st.info(f"Phase #{val}")
+    st.info("Phase #{val}")
 
     #llm model apikey
     #os.environ["OPENAI_API_KEY"] = "OPENAI_API_KEY"
