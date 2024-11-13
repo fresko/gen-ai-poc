@@ -6,19 +6,19 @@ import json
 
 #load_dotenv()
 
-st.set_page_config('preguntaDOC')
+st.set_page_config('Approve')
 #OPENAI_API_KEY = st.text_input('OpenAI API Key', type='password')
 st.header("FORMULARIO DE APROBACIÓN")
 st.write("*")
 
 # Cargar el archivo JSON
-#json_file_path = 'ruta/al/archivo.json'
 json_file = st.file_uploader("Carga tu documento", type="json", on_change=st.cache_resource.clear)
 
 if not json_file:
     st.stop()
-#with open(json_file_path, 'r') as file:
-    json_data = json.load(json_file)
+
+# Leer el archivo JSON
+json_data = json.load(json_file)
 
 # Crear dos columnas
 col1, col2 = st.columns(2)
