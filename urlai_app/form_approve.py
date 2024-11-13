@@ -15,6 +15,8 @@ st.write("*")
 #json_file_path = 'ruta/al/archivo.json'
 json_file_path = st.file_uploader("Carga tu documento", type="json", on_change=st.cache_resource.clear)
 
+if not json_file_path:
+    st.stop()
 with open(json_file_path, 'r') as file:
     json_data = json.load(file)
 
