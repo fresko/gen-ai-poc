@@ -1,10 +1,10 @@
 import streamlit as st
 import os
 import json
-from dotenv import load_dotenv
+#from dotenv import load_dotenv
 
 
-load_dotenv()
+#load_dotenv()
 
 st.set_page_config('preguntaDOC')
 #OPENAI_API_KEY = st.text_input('OpenAI API Key', type='password')
