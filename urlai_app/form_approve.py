@@ -24,7 +24,7 @@ if pdf_file is not None:
         temp_file_path = temp_file.name
 
     # Leer el archivo PDF
-    pdf_reader = PyPDF2.PdfFileReader(temp_file_path)
+    pdf_reader = PyPDF2.PdfReader(temp_file_path)
     num_pages = pdf_reader.numPages
 
     # Mostrar la barra de progreso
