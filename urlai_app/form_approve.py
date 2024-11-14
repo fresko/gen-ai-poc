@@ -25,7 +25,7 @@ if pdf_file is not None:
 
     # Leer el archivo PDF
     pdf_reader = PyPDF2.PdfReader(temp_file_path)
-    num_pages = pdf_reader.numPages
+    num_pages = len(pdf_reader.pages)
 
     # Mostrar la barra de progreso
     progress_bar = st.progress(0)
