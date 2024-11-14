@@ -35,8 +35,8 @@ if pdf_file is not None:
 
     # Visualizar el PDF
     st.subheader("Visualizador de PDF")
-    for page_num in range(num_pages):
-        page = pdf_reader.getPage(page_num)
+    for page_num in range(num_pages):        
+        page = pdf_reader.pages[page_num]
         st.write(page.extract_text())
 else:
     st.stop()
