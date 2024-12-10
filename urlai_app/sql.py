@@ -69,36 +69,36 @@ if api_key:
     metadata_obj = MetaData()
 
     # create city SQL table
-    table_name = "city_stats"
+    table_name = "orden_compra"
     city_stats_table = Table(
         table_name,
         metadata_obj,
-        Column("city_name", String(16), primary_key=True),
-        Column("population", Integer),
-        Column("country", String(16), nullable=False),
+        Column("orden_name", String(16), primary_key=True),
+        Column("valor", Integer),
+        Column("proveedor", String(16), nullable=False),
     )
 
     metadata_obj.create_all(engine)
 
     #Insertar en table 
     rows = [
-        {"city_name": "Toronto", "population": 2930000, "country": "Canada"},
-        {"city_name": "Tokyo", "population": 13960000, "country": "Japan"},
-        {"city_name": "Berlin", "population": 3645000, "country": "Germany"},
+        {"orden_name": "ORDC1", "valor": 5000000, "proveedor": "tienda"},
+        {"orden_name": "ORDC2", "valor": 6000000, "proveedor": "exito"},
+        {"orden_name": "ORDC3", "valor": 10000000, "proveedor": "mercado"},
     ]
     for row in rows:
         stmt = insert(city_stats_table).values(**row)
         with engine.begin() as connection:
             cursor = connection.execute(stmt)
         with engine.connect() as connection:
-            cursor = connection.exec_driver_sql("SELECT * FROM city_stats")
+            cursor = connection.exec_driver_sql("SELECT * FROM orden_compra")
             print(cursor.fetchall())
 
-    sql_database = SQLDatabase(engine, include_tables=["city_stats"])
+    sql_database = SQLDatabase(engine, include_tables=["orden_compra"])
     #This is the query engine that will allow you to query your database using natural language (NL).
     sql_query_engine = NLSQLTableQueryEngine(
         sql_database=sql_database,
-        tables=["city_stats"],
+        tables=["orden_compra"],
     )
 
     # Caragar data desde wiki pedia
@@ -138,14 +138,14 @@ if api_key:
         query_engine=sql_query_engine,
         description=(
             "Useful for translating a natural language query into a SQL query over"
-            " a table containing: city_stats, containing the population/country of"
+            " a table containing: orden_compra, containing the valor/proveedor of"
             " each city"
         ),
     )
     vector_tool = QueryEngineTool.from_defaults(
         query_engine=retriever_query_engine,
         description=(
-            "Useful for answering semantic questions about different cities"
+            "Useful for answering semantic questions about different orden_compra"
         ),
     )
 
