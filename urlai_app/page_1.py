@@ -4,7 +4,7 @@ import json
 import plotly.express as px
                         
 def app():
-    st.title("Hola Mundo - 😎")
+    st.title("Hola Mundo - 😀")
     st.write("Codigo Generado, !")
     st.title("Dashboard de Administración Educativa")   
     
