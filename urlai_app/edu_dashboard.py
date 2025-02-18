@@ -5,6 +5,8 @@ import json
 import os
 import random
 import importlib.util
+import google.generativeai as genai
+from dotenv import load_dotenv
 
 st.set_page_config(page_title="Educational Analytics Dashboard", layout="wide")
 
@@ -70,6 +72,37 @@ def create_dashboard(df):
                       barmode='group')
     st.plotly_chart(fig_prog)
 
+    ##Config Gemini AI
+def crete_prompt(selected_llm,prompt):
+        #prompt = "identifica los grupos de informacion o entidades de negocio y regeresalo en formato json simple clave valor con los datos  contenidos en el archivo adjunto"
+        generation_config = {
+            "temperature": 1,
+            "top_p": 0.95,
+            "top_k": 40,
+            "max_output_tokens": 8192,
+            "response_mime_type": "text/plain",
+        }
+        model = genai.GenerativeModel(
+            #model_name="gemini-1.5-flash-002",       
+            model_name=selected_llm,       
+            generation_config=generation_config,
+        )
+        #files = genai.upload_file(file_content, mime_type="application/pdf")
+       # print(f"Uploaded file '{files.display_name}' as: {files.uri}")
+        chat_session = model.start_chat(
+            history=[
+                {
+                    "role": "user",
+                    "parts": [
+                        #files,
+                        prompt,
+                    ],
+                },
+            ]
+        )
+        response = chat_session.send_message("INSERT_INPUT_HERE")
+        return response
+
 def main():
     st.title("Dashboard de Análisis Educativo")
     
@@ -89,29 +122,54 @@ def main():
     #########
     # # Initialize session state for page counter and generated pages list
     if uploaded_file is not None:
-        if "page_counter" not in st.session_state:
-            st.session_state.page_counter = 1
-        if "generated_pages" not in st.session_state:
-            st.session_state.generated_pages = []
+        
+#       OPENAI_API_KEY = st.text_input('OpenAI API Key', type='password')
+        st.header("AGENTE AI - PREGUNTA A TU PDF")
+        GOOGLE_API_KEY = st.text_input('GOOGLE_API_KEY', type='password')
+        os.environ["GOOGLE_API_KEY"] = GOOGLE_API_KEY
+        genai.configure(api_key=os.environ.get("GOOGLE_API_KEY"))
 
+         # Crear una lista de tres valores
+        options = ["gemini-1.5-flash-002", "gemini-1.0-pro", "gemini-1.5-pro","gemini-2.0-flash-exp","gemini-2.0-pro-exp"]
+        
+        # Crear un selectbox en Streamlit
+        selected_llm = st.selectbox("Selecciona el modelo LLM:", options)
+        
+        # Mostrar el valor del ítem seleccionado
+        st.write(f"Has seleccionado: {selected_llm}")
+
+        prompt = st.text_input("Escribe tu nombre")
         # Input for name and button to generate a new page
-        name = st.text_input("Crea tu dashboard")
-        if st.button("Generar DashBoard"):
-            # List of random emoticons
-            emoticons = ["😀", "😎", "🥳", "🤖", "😂"]
-            random_emoticon = random.choice(emoticons)
-            
-            # Create new page filename using the counter
-            page_filename = f"page_{st.session_state.page_counter}.py"
-            with open(page_filename, "w", encoding="utf-8") as f:
-                f.write(f'''import streamlit as st
+        btn_agente = st.button("Crea tu dashboard")
+        if btn_agente:
+            st.write("Generando Dashboard...")
+            response_llm = crete_prompt(selected_llm,prompt)
+            st.write(response_llm.text)
+
+            #st.write
+
+            if "page_counter" not in st.session_state:
+                st.session_state.page_counter = 1
+            if "generated_pages" not in st.session_state:
+                st.session_state.generated_pages = []
+
+        
+        
+                # List of random emoticons
+                emoticons = ["😀", "😎", "🥳", "🤖", "😂"]
+                random_emoticon = random.choice(emoticons)
+                
+                # Create new page filename using the counter
+                page_filename = f"page_{st.session_state.page_counter}.py"
+                with open(page_filename, "w", encoding="utf-8") as f:
+                    f.write(f'''import streamlit as st
 import pandas as pd
 import json
 import plotly.express as px
                         
 def app():
-    st.title("Hola Mundo - {name} {random_emoticon}")
-    st.write("Bienvenido, {name}!")
+    st.title("Hola Mundo - {random_emoticon}")
+    st.write("Codigo Generado, !")
     st.title("Dashboard de Administración Educativa")   
     
     try:
@@ -152,19 +210,19 @@ def app():
 if __name__ == "__main__":
     app()
 ''')
-            # Append the new page file to the list & update counter
-            st.session_state.generated_pages.append(page_filename)
-            st.session_state.page_counter += 1
-            st.success(f"Página generada: {page_filename}")
-            
-            # Load and execute the generated page inline
-            spec = importlib.util.spec_from_file_location("generated_page", page_filename)
-            generated_page = importlib.util.module_from_spec(spec)
-            spec.loader.exec_module(generated_page)
-            if hasattr(generated_page, "app"):
-                st.markdown("### Contenido de la página generada")
-                generated_page.app()
-            
+                # Append the new page file to the list & update counter
+                st.session_state.generated_pages.append(page_filename)
+                st.session_state.page_counter += 1
+                st.success(f"Página generada: {page_filename}")
+                
+                # Load and execute the generated page inline
+                spec = importlib.util.spec_from_file_location("generated_page", page_filename)
+                generated_page = importlib.util.module_from_spec(spec)
+                spec.loader.exec_module(generated_page)
+                if hasattr(generated_page, "app"):
+                    st.markdown("### Contenido de la página generada")
+                    generated_page.app()
+                
 
 if __name__ == "__main__":
     main()
