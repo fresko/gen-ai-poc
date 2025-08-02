@@ -6,9 +6,19 @@ import os
 import random
 import importlib.util
 import google.generativeai as genai
+import tempfile
+from tempfile import NamedTemporaryFile
+import ast
 from dotenv import load_dotenv
 
-st.set_page_config(page_title="Educational Analytics Dashboard", layout="wide")
+#st.set_page_config(page_title="Educational Analytics Dashboard", layout="wide")
+
+with st.sidebar:
+        st.title("Agente DataWise 👨‍💼💬🤖")
+        
+        st.subheader("MultiAgentes IA")
+        st.page_link("edu_dashboard.py", label="Dashboard Principal", icon="📊")
+        st.page_link("pages/detailed_analysis.py", label="Laboratorio de Datos", icon="🧪")
 
 def load_data(file):
     data = json.load(file)
@@ -72,8 +82,32 @@ def create_dashboard(df):
                       barmode='group')
     st.plotly_chart(fig_prog)
 
+def extract_strucutre(file):
+    #data = json.load(file)
+        data = {
+        "division": "ciencias de la salud",
+        "cau": "sede bogota",
+        "codigosnies": "1091",
+        "edad": "53",
+        "estadofin": "admitido",
+        "email": "dora.venegas.espinosa@gmail.com",
+        "genero": "f",
+        "facultad": "fac. de psicologia",
+        "programa": "maestria en psicologia clinica y de la familia",
+        "seccional": "bogota",
+        "telefono": "3143949033",
+        "tipoidentificacion": "cc",
+        "numeroidentificacion": "39784176",
+        "nivelestudios": "maestria",
+        "nivelformacion": "postgrado",
+        "periodoacademico": "2023-1",
+        "tipoinscripcion": "normal"
+        }
+        #df = pd.DataFrame(data)
+        return data
+
     ##Config Gemini AI
-def crete_prompt(selected_llm,prompt):
+def crete_prompt(structure_data,selected_llm,prompt):
         #prompt = "identifica los grupos de informacion o entidades de negocio y regeresalo en formato json simple clave valor con los datos  contenidos en el archivo adjunto"
         generation_config = {
             "temperature": 1,
@@ -86,16 +120,18 @@ def crete_prompt(selected_llm,prompt):
             #model_name="gemini-1.5-flash-002",       
             model_name=selected_llm,       
             generation_config=generation_config,
+            system_instruction="eres un desarrollador experto en py y streamlit y visualizacion de datos, según  esta estructura de datos json exactamente igual sin cambiar su nombres de campos , entiende la estructra  y genera  visulizaciones clave best fit  para crear un interactivo  dashboard  en el ambito de la educacion o para rectores y administrativos de la universidad  ,genera codigo py para dashboard de visualizacion dinámico , según  la estructura  de datos entregada ,  en la respuesta solo codigo en py y streamlit , los gráficos con librería plotly.express  ,ten encuenta este codigo es para una  sola pagina , incluye el bloque de ejecucion  main que llame la funcion app . sin explicaciones.",
         )
-        #files = genai.upload_file(file_content, mime_type="application/pdf")
-       # print(f"Uploaded file '{files.display_name}' as: {files.uri}")
+        #files = genai.upload_file(filedata, mime_type="text/plain")
+        #print(f"Uploaded file '{files.display_name}' as: {files.uri}")
+        print("Estructura de datos : ",structure_data)
         chat_session = model.start_chat(
             history=[
                 {
                     "role": "user",
                     "parts": [
                         #files,
-                        prompt,
+                        "estructura de datos : "+str(structure_data)+ " "+prompt,
                     ],
                 },
             ]
@@ -104,9 +140,9 @@ def crete_prompt(selected_llm,prompt):
         return response
 
 def main():
-    st.title("Dashboard de Análisis Educativo")
+    st.title("Análisis de Datos - BI Aumentada con IA")
     
-    uploaded_file = st.file_uploader("Cargar archivo JSON", type=['json'])
+    uploaded_file = st.file_uploader("Cargar Datos Interpretado por Agente de Datos", type=['json'])
     
     if uploaded_file is not None:
         try:
@@ -115,7 +151,7 @@ def main():
         except Exception as e:
             st.error(f"Error al procesar el archivo: {str(e)}")
     else:
-        st.info("Por favor carga un archivo JSON para visualizar el dashboard")
+        st.info("Selecciona archivo de Datos Interpretado por Agente de Datos para visualizar el dashboard")
 
     #########
     # Additional code for generating dynamic pages
@@ -124,7 +160,7 @@ def main():
     if uploaded_file is not None:
         
 #       OPENAI_API_KEY = st.text_input('OpenAI API Key', type='password')
-        st.header("AGENTE AI - PREGUNTA A TU PDF")
+        st.header("AGENTE AI - PREGUNTALE A TUS DATOS 👨‍💼💬🤖")
         GOOGLE_API_KEY = st.text_input('GOOGLE_API_KEY', type='password')
         os.environ["GOOGLE_API_KEY"] = GOOGLE_API_KEY
         genai.configure(api_key=os.environ.get("GOOGLE_API_KEY"))
@@ -138,44 +174,71 @@ def main():
         # Mostrar el valor del ítem seleccionado
         st.write(f"Has seleccionado: {selected_llm}")
 
-        prompt = st.text_input("Escribe tu nombre")
+        #ruta de file upload
+        with tempfile.NamedTemporaryFile(delete=False) as tmp_file:
+            tmp_file.write(uploaded_file.getvalue())
+            file_path = tmp_file.name
+
+        # Reemplazar el input de texto por un text_area para tener más espacio
+        prompt = st.text_area("Preguntale a DataWise sobre tus datos 🤓", height=150)
+        
         # Input for name and button to generate a new page
+        #solucion varias veces 
         btn_agente = st.button("Crea tu dashboard")
         if btn_agente:
-            st.write("Generando Dashboard...")
-            response_llm = crete_prompt(selected_llm,prompt)
-            st.write(response_llm.text)
-
+              
+            # Reiniciar las variables de session para forzar una "nueva sesión"
+            st.session_state.page_counter = 1
+            st.session_state.generated_pages = []
+            st.session_state.page_generated = False
             #st.write
+            st.write("Generando Dashboard Dinamico...")
 
-            if "page_counter" not in st.session_state:
-                st.session_state.page_counter = 1
-            if "generated_pages" not in st.session_state:
-                st.session_state.generated_pages = []
+            sdata = extract_strucutre(file_path)
+            response_llm = crete_prompt(sdata,selected_llm,prompt)
+            code_generated = response_llm.text
 
+            #validar
+
+           #try:
+                #ast.parse(code_generated)
+           
+            #st.write(code_generated)
+            code_generated_visual = code_generated
+            code_generated = code_generated.replace("```python", "")
+            code_generated = code_generated.replace("```", "")       
         
-        
-                # List of random emoticons
-                emoticons = ["😀", "😎", "🥳", "🤖", "😂"]
-                random_emoticon = random.choice(emoticons)
-                
-                # Create new page filename using the counter
-                page_filename = f"page_{st.session_state.page_counter}.py"
-                with open(page_filename, "w", encoding="utf-8") as f:
-                    f.write(f'''{random_emoticon})''')
-                   
-                # Append the new page file to the list & update counter
-                st.session_state.generated_pages.append(page_filename)
-                st.session_state.page_counter += 1
-                st.success(f"Página generada: {page_filename}")
-                
-                # Load and execute the generated page inline
-                spec = importlib.util.spec_from_file_location("generated_page", page_filename)
-                generated_page = importlib.util.module_from_spec(spec)
-                spec.loader.exec_module(generated_page)
-                if hasattr(generated_page, "app"):
-                    st.markdown("### Contenido de la página generada")
-                    generated_page.app()
+                # Supongamos que este código se ejecuta al pulsar un botón (o en cierto evento)
+            if not st.session_state.page_generated:
+                    # Aquí se incluye el código para generar la página dinámica
+                    page_filename = f"page_{st.session_state.page_counter}.py"
+                    with open(page_filename, "w", encoding="utf-8") as f:
+                        # 'code_generated' es la cadena que contiene el código Python que queremos escribir,
+                        # asegurarse de que no contenga marcas Markdown como ```python
+                        code_generated = code_generated.replace("df = pd.DataFrame([data])", "df = pd.read_json('data.json')")
+                        f.write(f'''{code_generated}''')
+                    
+                    # Actualizar el estado de sesión
+                    st.session_state.generated_pages.append(page_filename)
+                    st.session_state.page_counter += 1
+                    st.session_state.page_generated = True
+                    st.success(f"Página generada: {page_filename}")
+                    
+                    # Cargar y ejecutar la página generada de forma inline
+                    spec = importlib.util.spec_from_file_location("generated_page", page_filename)
+                    generated_page = importlib.util.module_from_spec(spec)
+                    spec.loader.exec_module(generated_page)
+                    if hasattr(generated_page, "app"):
+                        st.markdown("### Contenido de la página generada")
+                        generated_page.app()
+
+            
+            with st.expander("Ver código generado", expanded=False):
+                st.code(code_generated_visual, language="python")
+
+           # except SyntaxError as e:
+                #st.error(f"El código generado contiene errores de sintaxis: {e}")
+            #return  # O maneja la situación de error
                 
 
 if __name__ == "__main__":
